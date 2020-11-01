@@ -1,0 +1,6 @@
+dlib==19.21.0
+opencv_contrib_python==4.1.1.26
+imutils==0.5.3
+numpy==1.19.2
+PyAudio==0.2.11
+Adafruit_PCA9685==1.0.1

@@ -17,6 +17,9 @@ if __name__ == "__main__":
     mic0=Mic(0)
     mic1=Mic(1)
     mics = [mic0, mic1]
+    sound_level = 0
+    level_count = 0
+    level_count_limit = 10
 
     # Servo
     servoMotors = []
@@ -40,8 +43,8 @@ if __name__ == "__main__":
     np.array([154.810608,717.849009,44.629635]), np.array([277.317012,689.956832,74.136585])]
 
     range_min = 0
-    range_max = 120
-    threshold = 0.05
+    range_max = 150
+    threshold = 0.1
     range_max_th = 180
 
     # initialize cams factor
@@ -54,7 +57,16 @@ if __name__ == "__main__":
             # mic
             for mic in mics:
                 mic.level = mic.record()
-            sound_level = max([mic.level for mic in mics])
+            max_level = max([mic.level for mic in mics])
+            if max_level < threshold:
+                level_count += 1
+                if level_count > level_count_limit:
+                    sound_level = max_level
+                else:
+                    pass
+            else:
+                level_count = 0
+                sound_level = max_level
             # camera
             for cam in cams:
                 cam.min_difs = []
@@ -100,7 +112,7 @@ if __name__ == "__main__":
             #     factor_a = cams[1].factor
             #     factor_b = cams[1].factor
             new_factor_remap = convert_to_servo_value(factor_a, factor_b, range_min, range_max, threshold, range_max_th, sound_level)
-            print([cam.none_count for cam in cams], new_factor_remap, sound_level)
+            print([cam.none_count for cam in cams], new_factor_remap, max_level,sound_level, level_count)
             # calculation
 
             # servo
@@ -110,6 +122,8 @@ if __name__ == "__main__":
             #     print("Moved")
             time.sleep(0.1)
         except KeyboardInterrupt:   # exceptに例外処理を書く
+            for i,servoMotor in enumerate(servoMotors):
+                servoMotor.setAngle(0)
             print('stop!')
             mic0.stop_recording()
             break
