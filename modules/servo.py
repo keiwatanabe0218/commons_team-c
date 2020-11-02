@@ -16,3 +16,7 @@ class ServoMotor:
 
     def cleanup(self):
         self.setAngle(10)
+
+if __name__ == '__main__':
+    servoMotor = ServoMotor(Channel=3, ZeroOffset=0)
+    servoMotor.setAngle(0)

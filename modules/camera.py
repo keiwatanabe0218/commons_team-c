@@ -17,13 +17,14 @@ class Camera:
 
         self.max_difs = []
         self.min_difs = []
+        self.srf_vectors = []
         self.factor = []
         self.none_count = 0
         self.is_none = True
     def get_angle(self):
         ret, frame = self.capture.read() #カメラからキャプチャしてframeに１コマ分の画像データを入れる
 
-        frame = imutils.resize(frame, width=150) #frameの画像の表示サイズを整える
+        frame = imutils.resize(frame, width=200) #frameの画像の表示サイズを整える
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) #gray scaleに変換する
         rects = self.detector(gray, 0) #grayから顔を検出
         image_points = None

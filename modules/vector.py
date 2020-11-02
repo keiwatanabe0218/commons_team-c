@@ -24,7 +24,7 @@ def vector_to_value(index, srf_vectors, xy, yz, xy_old_min, xy_old_max, xy_new_m
     new_yz = remap_number(yz, yz_old_min, yz_old_max, yz_new_min, yz_new_max)
     if index == 0:
         vec = np.array([math.sin(math.radians(new_xy)),math.cos(math.radians(new_xy)),math.sin(math.radians(new_yz)) * (math.cos(math.radians(new_xy))/math.cos(math.radians(new_yz)))])
-    elif index == 1:
+    elif index > 0:
         vec = np.array([-(math.sin(math.radians(new_xy))),-(math.cos(math.radians(new_xy))),math.sin(math.radians(new_yz)) * (math.cos(math.radians(new_xy))/math.cos(math.radians(new_yz)))])
     else:
         return None, None, None

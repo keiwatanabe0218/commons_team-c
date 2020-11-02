@@ -49,10 +49,10 @@ class Mic:
         self.p.terminate()
 
 if __name__ == "__main__":
-    mic = Mic2(0)
+    mic = Mic(2)
     while True:
         try:
-            mic.record()
+            print(mic.record())
             time.sleep(0.3)
         except KeyboardInterrupt:
             mic.stop_recording()
